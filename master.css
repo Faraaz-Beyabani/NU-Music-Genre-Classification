@@ -43,6 +43,7 @@ body {
 .title-text {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0px;
+    color: #eee;
 }
 
 .class-info {
@@ -51,13 +52,14 @@ body {
 }
 
 .content {
-    background-color: #ddd;
+    background-color: #eee;
+    padding: 0px 15px;
 }
 
 .footer {
     padding-top: 19px;
     border-top: 1px solid #777; 
-    background-color: #ddd;
+    background-color: #eee;
     flex: 1;
 }
 
