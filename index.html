@@ -1,44 +1,55 @@
 <!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Music Genre Classification</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="css/master.css">
+    <script type="text/javascript" src="js/main.js"></script>
+  </head>
+  <body>
 
-<html>
-<title>Music Genre Classification</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="master.css">
-<body>
+    <div id="nav-bar">
+      <a id="home-link" class="active" onclick="goHome(this)">Home</a>
+      <a id="cnn-link" onclick="goCNN(this)">CNN</a>
+      <a id="dt-link" onclick="goDT(this)">Decision Tree</a>
+      <a id="repet-link" onclick="goREPET(this)">REPET</a>
+    </div>
 
-<div class="topnav">
-    <a class="active" href="index.html">Home</a>
-    <a href="dataset.html">Dataset</a>
-    <a href="results.html">Procedure & Results</a>
-</div> 
+    <div id="header">
+      <h1 class="title">Music Genre Classification</h1>
+      <p class="sub-title">Northwestern University, EECS 352</p>
+      <p class="sub-title">Professor Bryan Pardo</p>
+    </div>
 
-<div class="title">
-    <h1 class="title-text">Music Genre Classification</h1>
-    <p class="class-info">Northwestern University, EECS 352</p>
-    <p class="class-info">Professor Bryan Pardo</p>
-</div>
+    <div id="home" class="tab">
+      <h2>Introduction</h2>
+      <p>An interesting niche in music information retrieval has been done classifying music genres using song spectrograms. Some of the different approaches use some sort of CNN to convert the spectrogram to a vector representation with different higher-level layers to extract more meaningful results.</p>
+      <p>We will also build a decision tree trained on several features in order to investigate how the CNN is classifying genres and to compare the results. We want to use these techniques of genre classification and the REPET algorithm to create and classify cross-mixed songs in order to discover which aspects of a song are more strongly correlated with particular genres.</p>
+      <p>Music genre classification is an interesting task because of its value to music information retrieval and audio signal processing. In the past couple years, sequential learning has rapidly improved via attention layers. Our goal is to build off of the previous neural network models by introducing these attention layers to try to improve the temporal dimension of the data, while simultaneously understanding how we got the results we did.</p>
+    </div>
 
-<div class="content">
-    <h2>Introduction</h2>
-    <p>
-        An interesting niche in music information retrieval has been done classifying music genres using song spectrograms. Some of the different approaches use some sort of CNN to convert the spectrogram to a vector representation with different higher-level layers to extract more meaningful results. 
-    </p>
+    <div id="cnn" class="tab hidden">
 
-    <p>
-        We will also build a decision tree trained on several features in order to investigate how the CNN is classifying genres and to compare the results. We want to use these techniques of genre classification and the REPET algorithm to create and classify cross-mixed songs in order to discover which aspects of a song are more strongly correlated with particular genres.
-    </p>
+    </div>
 
-    <p>
-        Music genre classification is an interesting task because of its value to music information retrieval and audio signal processing. In the past couple years, sequential learning has rapidly improved via attention layers. Our goal is to build off of the previous neural network models by introducing these attention layers to try to improve the temporal dimension of the data, while simultaneously understanding how we got the results we did. 
-    </p>
-</div>
-    
-<div class="footer">
-    <div style="text-align: center;">Email us:</div>
-    <div class="container">
+    <div id="dt" class="tab hidden">
+
+    </div>
+
+    <div id="repet" class="tab hidden">
+      <audio controls src="audio/mixed_tracks/electronic_bg/047658-000459.mp3"></audio>
+    </div>
+
+    <div id="footer">
+      <div style="text-align: center;">Email us:</div>
+      <div class="container">
         <div class="containee"><a class="contact" href="mailto:pretzer@u.northwestern.edu">Sebastian Pretzer</a></div>
         <div class="containee"><a class="contact" href="mailto:faraazbeyabani2020@u.northwestern.edu">Faraaz Beyabani</a></div>
         <div class="containee"><a class="contact" href="mailto:yoonsangchong2016@u.northwestern.edu">Jos Chong</a></div>
+      </div>
     </div>
-</div>
+
+  </body>
+</html>
