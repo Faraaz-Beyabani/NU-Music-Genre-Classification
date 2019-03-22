@@ -42,11 +42,11 @@ body {
 
 .title-text {
     font-family: Arial, Helvetica, sans-serif;
-    margin-bottom: -2px;
+    margin: 0px;
 }
 
 .class-info {
-    color: #aaa;
+    color: #ccc;
     margin: 5px;
 }
 
