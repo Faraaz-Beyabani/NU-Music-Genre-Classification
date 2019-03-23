@@ -76,17 +76,17 @@ body {
 
 }
 
-.subsection {
+.section-50 {
   display: inline-block;
   width: 49%;
 }
 
-.subsection-66 {
+.section-66 {
   display: inline-block;
   width: 66%;
 }
 
-.subsection-33 {
+.section-33 {
   display: inline-block;
   width: 33%;
   vertical-align: top;
@@ -173,6 +173,12 @@ body {
   width: 90%;
 }
 
+#dt-confusion {
+  margin-left: 10%;
+  width: 80%;
+}
+
 #dt-labeled {
+  margin-top: 25px;
   width: 100%;
 }

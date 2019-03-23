@@ -50,36 +50,36 @@
     </div>
 
     <div id="cnn" class="tab hidden">
-      <div class="subsection-66">
-        <div class="subsection-66">
+      <div class="section-66">
+        <div class="section-66">
           <h2 class="section-title">Implementation</h2>
           <p>The initial goal was to create a CRNN that could capture both spatial and temporal data of a spectrogram. The CNN would capture the spatial information in the spectrogram and then the CNN output vectors would be run through an RNN for final classification. Due to the mismatching gradients between the RNN and CNN, it proved difficult to find a minima and we could not get meaningful results in a reasonable amount of time.</p>
           <p>We fell back to using a CNN only, which pools the spectrogram into a single float. The single floats from all the filters are then classified by a fully connected layer. The CNN takes in a spectrogram with dimensions 96x1366, and runs it through 5 total convolutional and max pooling layers. All the convolutional layers have kernels of size 3×3 and the max pool layers have kernels of sizes 2×4, 2×4, 2×4, 3×5, and 4×4 respectively. We added batch normalization after the convolutional layers and dropout after the max pooling layers to reduce overfitting and improve test set accuracy.</p>
         </div>
-        <div class="subsection-33">
+        <div class="section-33">
           <img id="nn-structure" src="images/nn-structure.png">
         </div>
         <h2 class="section-title">Results</h2>
         <p>The model performs fairly well, given the multi-class problem. A spectrogram only encodes a finite amount of information and our model is fairly small for a neural net. Training and testing accuracy were about 60% at their best.</p>
         <p>For the most part, when the model misclassified, its predicted label was electronic. Otherwise, it was correct. We listened to the electronic tracks and it seemed like they contained features shared with many other classes. So, we were unable to determine if the overclassification of electronic music was due to the dataset or the model itself. Additionally, pop music was heavily under classified. We hypothesis that this is due to the poor selection of pop songs in the dataset. Both the decision tree and the CNN misclassified pop consistently, and when listening to the clips, the songs did not fit our perceived definition of pop music.</p>
-        <div class="subsection">
+        <div class="section-50">
           <img id="five-class-confusion" src="images/5-classes-confusion.png">
           <p class="caption">Confusion matrix for 5-class model</p>
         </div>
-        <div class="subsection">
+        <div class="section-50">
           <img id="all-class-confusion" src="images/all-classes-confusion.png">
           <p class="caption">Confusion matrix for 8-class model</p>
         </div>
-        <div class="subsection">
+        <div class="section-50">
           <img id="five-class-report" src="images/5-classes-report.png">
           <p class="caption">Scores for 5-class model</p>
         </div>
-        <div class="subsection">
+        <div class="section-50">
           <img id="all-class-report" src="images/all-classes-report.png">
           <p class="caption">Scores for 8-class model</p>
         </div>
       </div>
-      <div class="subsection-33">
+      <div class="section-33">
         <img id="model-plot" src="images/model_plot.png">
       </div>
     </div>
@@ -90,11 +90,15 @@
         <p>The decision tree was built using scikit-learn's DecisionTreeClassifier, which uses the CART (Classification and Regression Tree) algorithm. It is similar to C4.5, but is always binary and uses cost-complexity pruning. The features used to build the decision tree were collected from the metadata provided by the FMA dataset. It consists of commonly extracted features from librosa, such as chroma features (Chroma Energy Normalized, Constant-Q Transform Chromagram, and Chroma STFT), spectral features (Bandwidth, Centroid, Contrast, and Rolloff), as well as other miscellaneous features such as Mel-Frequency Cepstral Coefficients and Zero-Crossing Rate.</p>
         <p>Each of these features also have several subcharacteristics: min, max, median, mean, skew, standard deviation, and kurtosis. Several features were split across the temporal dimension, and for those, both the mean and delta mean values were used as consolidated features. In total, 154 features were used to build the tree, although only 45 of them are actually utilized in the classification process due to the restricted maximum depth of 6. This value was selected empirically to provide the best accuracy, along with a minimum samples per leaf of 9.</p>
       </div>
-      <div class="section">
+      <div class="section-66">
         <h2 class="section-title">Results</h2>
         <p>Initially, the decision tree was built using data from all 8 of the genres present in the FMA small dataset. However, it performed poorly, and to fix that issue, 3 of the more potentially obscure genres (Experimental, Instrumental, and International) were removed from the classification process, resulting in a 5-class classifier. Ultimately, the model was trained on 4000 training examples (800 tracks from each of the 5 genres), and tested on 500 examples (100 tracks per genre).</p>
         <p>The best achieved training accuracy was 58.6%, but only 52.2% testing accuracy was achieved. As mentioned, like the CNN, the decision tree was particularly poor at classifying pop songs, to the point that removing pop as a class resulted in an improvement to almost 60% testing accuracy. It is also worth noting that using the metadata for the entire FMA dataset, as opposed to just FMA small, improved accuracies by up to 20% depending on other parameters. So, it is clear that the training set size does play a significant role in the arguably limited capabilities of the model.</p>
         <p></p>
+      </div>
+      <div class="section-33">
+        <img id="dt-confusion" src="images/dt-confusion.png">
+        <p class="caption">Confusion matrix for the decision tree</p>
       </div>
       <div class="section">
         <img id="dt-labeled" src="images/dt-labeled.png">
