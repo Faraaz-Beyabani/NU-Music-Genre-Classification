@@ -3,89 +3,176 @@
 }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-}
-
-#nav-bar {
   background-color: #333;
-  overflow: hidden;
-  text-align: center;
-}
-
-#nav-bar a {
-  float: left;
-  color: #888888;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-#nav-bar a:hover {
-  color: white;
-}
-
-#nav-bar a.active {
-  background-color: #0052a1;
-  color: white;
+  color: #ddd;
+  margin: 0;
 }
 
 #header {
   background-color: #0052a1;
-  color: white;
-  text-align: center;
   padding: 15px;
+  text-align: center;
 }
 
 .title {
-  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
   margin: 0px;
-  color: #eee;
 }
 
 .sub-title {
-  color: #ccc;
+  color: #fff;
   margin: 5px;
 }
 
+#contact {
+  float: right;
+  text-align: right;
+  margin-top: -90px;
+}
+
+#contact p {
+  font-size: 12px;
+  margin: 5px;
+}
+
+#nav-bar {
+  background-color: #ddd;
+  overflow: hidden;
+}
+
+#nav-bar a {
+  color: black;
+  float: left;
+  font-size: 18px;
+  font-weight: 900;
+  padding: 10px 0;
+  text-align: center;
+  width: 25%;
+}
+
+#nav-bar a:hover {
+  background-color: #444;
+  color: #ddd;
+}
+
+#nav-bar a.active {
+  background-color: #333;
+  color: #ddd;
+}
+
 .tab {
-  background-color: #eee;
-  padding: 0px 15px;
+  padding: 20px 40px;
 }
 
 .hidden {
   display: none;
 }
 
-#footer {
-  padding-top: 19px;
-  border-top: 1px solid #777;
-  background-color: #eee;
-  flex: 1;
+.section {
+  margin-bottom: 50px;
 }
 
-.container {
-  display: flex;
+.section-title {
+
+}
+
+.subsection {
+  display: inline-block;
+  width: 49%;
+}
+
+.subsection-66 {
+  display: inline-block;
+  width: 66%;
+}
+
+.subsection-33 {
+  display: inline-block;
+  width: 33%;
+  vertical-align: top;
+}
+
+.caption {
+  font-style: italic;
+  margin: 5px;
   text-align: center;
-  width: auto;
 }
 
-.containee {
-  flex: 1 1 33%;
+#background {
+  font-size: 20px;
+  height: 40px;
+  margin-right: 25px;
+  width: 150px;
 }
 
-.contact {
-  font-size: 22px;
-  color: #004282;
-  text-decoration: none;
+#foreground {
+  font-size: 20px;
+  height: 40px;
+  margin-right: 25px;
+  width: 150px;
 }
 
-.contact:hover {
-  font-size: 22px;
-  color: #0052A1;
-  text-decoration: underline;
+#cross-mix {
+  font-size: 18px;
+  height: 30px;
+  margin-right: 25px;
+  width: 120px;
+}
+
+#audio {
+  margin-right: 25px;
+  vertical-align: top;
+}
+
+#classification {
+  background-color: #ddd;
+  color: black;
+  display: inline-block;
+  font-size: 18px;
+  text-align: center;
+  width: 300px;
+}
+
+#features {
+  width: 100%;
+}
+
+#model-plot {
+  margin-left: 15%;
+  margin-top: 25px;
+  width: 80%;
+}
+
+#nn-structure {
+  margin-left: 40px;
+  margin-top: 60px;
+  width: 100%;
+}
+
+#five-class-confusion {
+  margin-left: 5%;
+  margin-top: 25px;
+  width: 90%;
+}
+
+#all-class-confusion {
+  margin-left: 5%;
+  margin-top: 25px;
+  width: 90%;
+}
+
+#five-class-report {
+  margin-left: 5%;
+  margin-top: 25px;
+  width: 90%;
+}
+
+#all-class-report {
+  margin-left: 5%;
+  margin-top: 25px;
+  width: 90%;
+}
+
+#dt-labeled {
+  width: 100%;
 }

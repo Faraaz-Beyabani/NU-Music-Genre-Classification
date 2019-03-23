@@ -10,44 +10,139 @@
   </head>
   <body>
 
-    <div id="nav-bar">
-      <a id="home-link" class="active" onclick="goHome(this)">Home</a>
-      <a id="cnn-link" onclick="goCNN(this)">CNN</a>
-      <a id="dt-link" onclick="goDT(this)">Decision Tree</a>
-      <a id="repet-link" onclick="goREPET(this)">REPET</a>
-    </div>
-
     <div id="header">
       <h1 class="title">Music Genre Classification</h1>
       <p class="sub-title">Northwestern University, EECS 352</p>
       <p class="sub-title">Professor Bryan Pardo</p>
+      <div id="contact">
+        <p>Contact us at:</p>
+        <p>faraazbeyabani2020@u.northwestern.edu</p>
+        <p>sebastianpretzer2018@u.northwestern.edu</p>
+        <p>yoonsangchong2016@u.northwestern.edu</p>
+      </div>
+    </div>
+
+    <div id="nav-bar">
+      <a id="home-link" class="active" onclick="goHome(this)">HOME</a>
+      <a id="cnn-link" onclick="goCNN(this)">CNN</a>
+      <a id="dt-link" onclick="goDT(this)">DECISION TREE</a>
+      <a id="repet-link" onclick="goREPET(this)">REPET</a>
     </div>
 
     <div id="home" class="tab">
-      <h2>Introduction</h2>
-      <p>An interesting niche in music information retrieval has been done classifying music genres using song spectrograms. Some of the different approaches use some sort of CNN to convert the spectrogram to a vector representation with different higher-level layers to extract more meaningful results.</p>
-      <p>We will also build a decision tree trained on several features in order to investigate how the CNN is classifying genres and to compare the results. We want to use these techniques of genre classification and the REPET algorithm to create and classify cross-mixed songs in order to discover which aspects of a song are more strongly correlated with particular genres.</p>
-      <p>Music genre classification is an interesting task because of its value to music information retrieval and audio signal processing. In the past couple years, sequential learning has rapidly improved via attention layers. Our goal is to build off of the previous neural network models by introducing these attention layers to try to improve the temporal dimension of the data, while simultaneously understanding how we got the results we did.</p>
+      <div class="section">
+        <h2 class="section-title">Introduction</h2>
+        <p>An interesting niche in music information retrieval is the classification of music genres. Some of the different approaches use some sort of convolutional neural network (CNN) to convert song spectrograms to a vector representations in order to extract more meaningful results. We built a CNN and a decision tree in order to compare the performance of both classifiers.</p>
+        <p>After developing these genre classification tools, we used the REPET algorithm to cross-mix songs of different genres and classify them with the CNN. By doing this, we were attempting to discern what features of the music the neural net may be using to make its classifications. </p>
+      </div>
+      <div class="section">
+        <h2 class="section-title">Dataset Selection</h2>
+        <p>Most of the work in the field of music genre classification relies on the GTZAN dataset, which contains 1,000 .wav files of 30 seconds each, divided into ten genres. We initially used this dataset in order to train a basic neural net to test if our approach worked, since many other datasets do not come with raw music due to copyright issues.</p>
+        <p>However, 1,000 examples is not a sizeable quantity to train a deep net with, so we opted to use the small version of the Free Music Archive dataset, which has 8,000 songs divided into 8 genres, all of which are also 30 seconds long. This dataset provides raw audio files (mp3 format), all of which is royalty- and copyright-free. Using this dataset, we had a substantially larger amount of data with which to train our model.</p>
+      </div>
+      <div class="section">
+        <h2 class="section-title">Dataset Features</h2>
+        <p>The genres of music that the FMA small dataset provides are: Electronic, Experimental, Folk, Hip-Hop, Instrumental, International, Pop, and Rock. In addition to the 8,000 audio files, the dataset also provides various CSV files containing artist, album, and track information; feature information like spectral centroid and zero-crossing rate; and Spotify/Echonest characteristics such as tempo.</p>
+      </div>
+      <div class="section">
+        <img id="features" src="images/features.png">
+      </div>
     </div>
 
     <div id="cnn" class="tab hidden">
-
+      <div class="subsection-66">
+        <div class="subsection-66">
+          <h2 class="section-title">Implementation</h2>
+          <p>The initial goal was to create a CRNN that could capture both spatial and temporal data of a spectrogram. The CNN would capture the spatial information in the spectrogram and then the CNN output vectors would be run through an RNN for final classification. Due to the mismatching gradients between the RNN and CNN, it proved difficult to find a minima and we could not get meaningful results in a reasonable amount of time.</p>
+          <p>We fell back to using a CNN only, which pools the spectrogram into a single float. The single floats from all the filters are then classified by a fully connected layer. The CNN takes in a spectrogram with dimensions 96x1366, and runs it through 5 total convolutional and max pooling layers. All the convolutional layers have kernels of size 3×3 and the max pool layers have kernels of sizes 2×4, 2×4, 2×4, 3×5, and 4×4 respectively. We added batch normalization after the convolutional layers and dropout after the max pooling layers to reduce overfitting and improve test set accuracy.</p>
+        </div>
+        <div class="subsection-33">
+          <img id="nn-structure" src="images/nn-structure.png">
+        </div>
+        <h2 class="section-title">Results</h2>
+        <p>The model performs fairly well, given the multi-class problem. A spectrogram only encodes a finite amount of information and our model is fairly small for a neural net. Training and testing accuracy were about 60% at their best.</p>
+        <p>For the most part, when the model misclassified, its predicted label was electronic. Otherwise, it was correct. We listened to the electronic tracks and it seemed like they contained features shared with many other classes. So, we were unable to determine if the overclassification of electronic music was due to the dataset or the model itself. Additionally, pop music was heavily under classified. We hypothesis that this is due to the poor selection of pop songs in the dataset. Both the decision tree and the CNN misclassified pop consistently, and when listening to the clips, the songs did not fit our perceived definition of pop music.</p>
+        <div class="subsection">
+          <img id="five-class-confusion" src="images/5-classes-confusion.png">
+          <p class="caption">Confusion matrix for 5-class model</p>
+        </div>
+        <div class="subsection">
+          <img id="all-class-confusion" src="images/all-classes-confusion.png">
+          <p class="caption">Confusion matrix for 8-class model</p>
+        </div>
+        <div class="subsection">
+          <img id="five-class-report" src="images/5-classes-report.png">
+          <p class="caption">Scores for 5-class model</p>
+        </div>
+        <div class="subsection">
+          <img id="all-class-report" src="images/all-classes-report.png">
+          <p class="caption">Scores for 8-class model</p>
+        </div>
+      </div>
+      <div class="subsection-33">
+        <img id="model-plot" src="images/model_plot.png">
+      </div>
     </div>
 
     <div id="dt" class="tab hidden">
-
+      <div class="section">
+        <h2 class="section-title">Implementation</h2>
+        <p>The decision tree was built using scikit-learn's DecisionTreeClassifier, which uses the CART (Classification and Regression Tree) algorithm. It is similar to C4.5, but is always binary and uses cost-complexity pruning. The features used to build the decision tree were collected from the metadata provided by the FMA dataset. It consists of commonly extracted features from librosa, such as chroma features (Chroma Energy Normalized, Constant-Q Transform Chromagram, and Chroma STFT), spectral features (Bandwidth, Centroid, Contrast, and Rolloff), as well as other miscellaneous features such as Mel-Frequency Cepstral Coefficients and Zero-Crossing Rate.</p>
+        <p>Each of these features also have several subcharacteristics: min, max, median, mean, skew, standard deviation, and kurtosis. Several features were split across the temporal dimension, and for those, both the mean and delta mean values were used as consolidated features. In total, 154 features were used to build the tree, although only 45 of them are actually utilized in the classification process due to the restricted maximum depth of 6. This value was selected empirically to provide the best accuracy, along with a minimum samples per leaf of 9.</p>
+      </div>
+      <div class="section">
+        <h2 class="section-title">Results</h2>
+        <p>Initially, the decision tree was built using data from all 8 of the genres present in the FMA small dataset. However, it performed poorly, and to fix that issue, 3 of the more potentially obscure genres (Experimental, Instrumental, and International) were removed from the classification process, resulting in a 5-class classifier. Ultimately, the model was trained on 4000 training examples (800 tracks from each of the 5 genres), and tested on 500 examples (100 tracks per genre).</p>
+        <p>The best achieved training accuracy was 58.6%, but only 52.2% testing accuracy was achieved. As mentioned, like the CNN, the decision tree was particularly poor at classifying pop songs, to the point that removing pop as a class resulted in an improvement to almost 60% testing accuracy. It is also worth noting that using the metadata for the entire FMA dataset, as opposed to just FMA small, improved accuracies by up to 20% depending on other parameters. So, it is clear that the training set size does play a significant role in the arguably limited capabilities of the model.</p>
+        <p></p>
+      </div>
+      <div class="section">
+        <img id="dt-labeled" src="images/dt-labeled.png">
+        <p class="caption">Visualization of the trained decision tree when restricted to a max depth of 4</p>
+      </div>
     </div>
 
     <div id="repet" class="tab hidden">
-      <audio controls src="audio/mixed_tracks/electronic_bg/047658-000459.mp3"></audio>
-    </div>
-
-    <div id="footer">
-      <div style="text-align: center;">Email us:</div>
-      <div class="container">
-        <div class="containee"><a class="contact" href="mailto:pretzer@u.northwestern.edu">Sebastian Pretzer</a></div>
-        <div class="containee"><a class="contact" href="mailto:faraazbeyabani2020@u.northwestern.edu">Faraaz Beyabani</a></div>
-        <div class="containee"><a class="contact" href="mailto:yoonsangchong2016@u.northwestern.edu">Jos Chong</a></div>
+      <div class="section">
+        <h2 class="section-title">Implementation</h2>
+        <p>Our motive for using the REPET algorithm was to help us better understand how the CNN was classifying each song. Thus, we chose a subset of songs from the entire dataset and used the REPET algorithm to separate them into foreground and background.</p>
+        <p>Initially, we tried to automate the process by using Python to split and join different audio files, but we soon realized that the two songs could have mismatched beats per minute, which may have affected their classification (as well as not representing the type of crossmixing we desired). Therefore, we decided to choose a fewer number of songs and manually combine them to minimize the discrepancies between the foreground and background.</p>
+        <p>We combined the constituent parts of songs of the following genres (never matching foreground and background of the same genre): Electronic, Folk, Hip-Hop, Pop, and Rock. In the process, we matched the beats per minute of the foreground to that of the background, then combined them using a music production tool called Ableton. We subsequently classified these mixed music tracks with our CNN and compared the predicted genres to the genres of the foreground and background parts.</p>
+      </div>
+      <div class="section">
+        <h2 class="section-title">Experiment</h2>
+        <p>Use the tool below to listen to the results of cross mixing the background of some selected songs with the foreground of other selected songs of different genres, and to see their classifications. Note: attempting to mix songs of the same genres will have no effect. Additionally, many of the mixes sound rough, due to the relative ineffectiveness of the REPET split for many tracks.</p>
+        <select id="background">
+          <option value="047658" selected="selected">Electronic</option>
+          <option value="073584">Folk</option>
+          <option value="072136">Hip-Hop</option>
+          <option value="091471">Pop</option>
+          <option value="128504">Rock</option>
+        </select>
+        <select id="foreground">
+          <option value="047658">Electronic 1</option>
+          <option value="130130">Electronic 2</option>
+          <option value="073584">Folk 1</option>
+          <option value="089484">Folk 2</option>
+          <option value="072136" selected="selected">Hip-Hop 1</option>
+          <option value="078516">Hip-Hop 2</option>
+          <option value="007528">Pop 1</option>
+          <option value="091471">Pop 2</option>
+          <option value="000459">Rock 1</option>
+          <option value="128504">Rock 2</option>
+        </select>
+        <button id="cross-mix" onclick="setAudio()">Cross Mix</button>
+        <audio id="audio" controls src="audio/mixed_tracks/047658-072136.mp3"></audio>
+        <div id="classification">
+          <p><b>Classification:</b> <span id="class">HIP-HOP</span></p>
+        </div>
+      </div>
+      <div class="section">
+        <h2 class="section-title">Results</h2>
+        <p>We mainly looked at the effects of the selected background on classification and made some interesting discoveries. The most interesting findings are as follows:</p>
+        <p>First, cross-mixed songs created using background tracks from Electronic music were always classified as the genre of the foreground track, barring one song with a Folk foreground which was classified as Rock. Combinations composed of a Hip-hop background were only ever classified as Hip-hop or Electronic. Next, mixtures created using backgrounds from Folk or Pop music were classified as Rock more than 80% of the time. Lastly, mixtures with a Rock background track were mostly identified as Rock, except when the foreground tracks were from Hip-hop songs. In that case, the songs were always classified as Hip-hop.</p>
+        <p>When Hip-hop served as the foreground piece of many combinations, it was almost always the case that the CNN classified the song as Hip-hop, likely due to the unique lyrical style not found in other music that we chose.</p>
+        <p>Mixtures with Pop or Folk backgrounds were classified as Rock most likely due to the mixture of gradual guitar melodies with overlaid drums. Songs with very strong drum noises in the background also classified as Hip-hop or Electronic. We believe this is due to the similarity of songs in the FMA dataset, in which many songs share instruments and musical patterns. Furthermore, the genre descriptors did not necessarily agree with how we believed the music ought to be labelled based on modern trends.</p>
       </div>
     </div>
 
